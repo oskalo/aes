@@ -8,6 +8,8 @@ class GetKeysEvent extends MainEvent {
 }
 
 class EmptyAmountEvent extends MainEvent {
+  String message;
+  EmptyAmountEvent(this.message);
 }
 
 

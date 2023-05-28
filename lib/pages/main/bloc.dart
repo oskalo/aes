@@ -24,7 +24,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     try {
       emit(ResultState(GenerateKeys(event.amount)));
     } catch (e) {
-      emit(ErrorState(message: e.toString()));
+      emit(ErrorState(e.toString()));
     }
   }
 
@@ -32,7 +32,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     event,
     emit,
   ) async {
-    emit(EmptyAmountState());
+    emit(EmptyAmountState(event.message));
   }
 }
 

@@ -14,6 +14,9 @@ class MainPage extends StatelessWidget {
     return BlocProvider<MainBloc>(
         create: (BuildContext context) => MainBloc(),
         child: Scaffold(
+          appBar: AppBar(
+            title: Text('Генератор EAS ключів'),
+          ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Center(
@@ -31,11 +34,10 @@ class MainPage extends StatelessWidget {
                           children: [
                             SizedBox(
                               width: 50,
-                              child: TextField(
+                              child: TextFormField(
                                 maxLines: 1,
                                 controller: valueController,
                                 keyboardType: TextInputType.number,
-                                maxLength: 2,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp("[0-9]"))
@@ -56,13 +58,14 @@ class MainPage extends StatelessWidget {
                               onPressed: () {
                                 if (valueController.text.isEmpty) {
                                   BlocProvider.of<MainBloc>(context)
-                                      .add(EmptyAmountEvent());
+                                      .add(EmptyAmountEvent("Я не можу згенерувати 0 ключиків, дай мені кількість від 1 до 100"));
+                                  return;
                                 }
 
                                 var value = int.parse(valueController.text);
-                                if (value < 1) {
+                                if (value < 1 || value > 100) {
                                   BlocProvider.of<MainBloc>(context)
-                                      .add(EmptyAmountEvent());
+                                      .add(EmptyAmountEvent("Вибачай, але потрібна кількість від 1 до 100"));
                                   return;
                                 }
 
@@ -90,11 +93,10 @@ class MainPage extends StatelessWidget {
                           children: [
                             SizedBox(
                               width: 50,
-                              child: TextField(
+                              child: TextFormField(
                                 maxLines: 1,
                                 controller: valueController,
                                 keyboardType: TextInputType.number,
-                                maxLength: 2,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp("[0-9]"))
@@ -115,12 +117,14 @@ class MainPage extends StatelessWidget {
                               onPressed: () {
                                 if (valueController.text.isEmpty) {
                                   BlocProvider.of<MainBloc>(context)
-                                      .add(EmptyAmountEvent());
+                                      .add(EmptyAmountEvent("Я не можу згенерувати 0 ключиків, дай мені кількість від 1 до 100"));
+                                  return;
                                 }
+
                                 var value = int.parse(valueController.text);
-                                if (value < 1) {
+                                if (value < 1 || value > 100) {
                                   BlocProvider.of<MainBloc>(context)
-                                      .add(EmptyAmountEvent());
+                                      .add(EmptyAmountEvent("Вибачай, але потрібна кількість від 1 до 100"));
                                   return;
                                 }
 
@@ -135,8 +139,7 @@ class MainPage extends StatelessWidget {
                       const SizedBox(
                         height: 20.0,
                       ),
-                      const Text(
-                          "Нє, так справи не робляться, мені треба кількість"),
+                      Text(state.message),
                     ],
                   );
                 }
@@ -153,11 +156,10 @@ class MainPage extends StatelessWidget {
                           children: [
                             SizedBox(
                               width: 50,
-                              child: TextField(
+                              child: TextFormField(
                                 maxLines: 1,
                                 controller: valueController,
                                 keyboardType: TextInputType.number,
-                                maxLength: 2,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp("[0-9]"))
@@ -178,12 +180,14 @@ class MainPage extends StatelessWidget {
                               onPressed: () {
                                 if (valueController.text.isEmpty) {
                                   BlocProvider.of<MainBloc>(context)
-                                      .add(EmptyAmountEvent());
+                                      .add(EmptyAmountEvent("Я не можу згенерувати 0 ключиків, дай мені кількість від 1 до 100"));
+                                  return;
                                 }
+
                                 var value = int.parse(valueController.text);
-                                if (value < 1) {
+                                if (value < 1 || value > 100) {
                                   BlocProvider.of<MainBloc>(context)
-                                      .add(EmptyAmountEvent());
+                                      .add(EmptyAmountEvent("Вибачай, але потрібна кількість від 1 до 100"));
                                   return;
                                 }
 
@@ -218,7 +222,11 @@ class MainPage extends StatelessWidget {
                   );
                 }
 
-                return const Text('ERROR');
+                return TextField(
+                    readOnly: true,
+                    textAlign: TextAlign.center,
+                    controller: TextEditingController()..text = "Помилка. Щось, десь пішло не за планом, пиши в телегу @oleh_sk_uk"
+                    );
               }),
             ),
           ),
@@ -259,8 +267,11 @@ class ElemKey extends StatelessWidget {
                       ),
                     ),
                     Align(
-                      child: Text(
-                        bodyKey,
+                      alignment: Alignment.center,
+                      child: TextFormField(
+                          readOnly: true,
+                          textAlign: TextAlign.center,
+                          controller: TextEditingController()..text = bodyKey
                       ),
                     ),
                     Align(
@@ -299,8 +310,10 @@ class ElemKey extends StatelessWidget {
                     ),
                     Align(
                       alignment: Alignment.center,
-                      child: Text(
-                        bodyKey,
+                      child: TextFormField(
+                          readOnly: true,
+                          textAlign: TextAlign.center,
+                          controller: TextEditingController()..text = bodyKey
                       ),
                     ),
                     Align(

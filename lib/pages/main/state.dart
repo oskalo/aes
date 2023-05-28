@@ -6,11 +6,14 @@ class ResultState extends MainState {
   ResultState(this.keys);
 }
 
-class EmptyAmountState extends MainState {}
+class EmptyAmountState extends MainState {
+  final String message;
+  EmptyAmountState(this.message);
+}
 
 class ErrorState extends MainState {
   final String message;
-  ErrorState({required this.message});
+  ErrorState(this.message);
 
   @override
   List<Object?> get props => [message];
